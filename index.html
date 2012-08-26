@@ -1,5 +1,26 @@
 <html>
 <head><title>ms11</title>
+<script type="text/javascript">
+	function headerClick(e) {
+		e.preventDefault();
+		div = document.getElementById(e.target.getAttribute("targetid"));
+		if(div.innerHTML.length > 0) {
+			div.innerHTML = "";
+		}else{
+			loadXHR(div,e.target.href);
+		}
+	}
+	function loadXHR(to,url) {
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', url, true);
+		xhr.onload = function(e) {
+		if (this.status == 200)	{
+			to.innerHTML = xhr.response;
+		}
+	};
+	xhr.send();
+	}
+</script>
 <style type="text/css">
 @font-face {
 	font-family: Ubuntu;
@@ -50,6 +71,10 @@ body{
 	font-size: 50px;
 	font-variant: smallcaps;
 }
+.xhrdiv{
+	text-align: left;
+	margin-top: 15px;
+}
 </style>
 </head>
 <body>
@@ -59,15 +84,20 @@ body{
 <table id="links" border="0">
 <tbody>
 <tr>
-<td><a class="links" href="http://ms11.github.com/4chanSoundPlayer">4chanSoundPlayer</a></td><td><a class="links" href="https://github.com/ms11/scriptish-progress">Scriptish-progress</a></td>
+<td><a class="links" href="/4chanSoundPlayer/index2.html" targetid="4chanSP">4chanSoundPlayer</a><div class="xhrdiv" id="4chanSP"></div></td><td><a class="links" href="https://github.com/ms11/scriptish-progress" targetid="ScrPr">Scriptish-progress</a><div class="xhrdiv" id="ScrPr"></div></td>
 </tr>
 <tr>
-<td><a class="links" href="https://github.com/ms11/SplitChan">SplitChan</a></td>
+<td><a class="links" href="https://github.com/ms11/SplitChan" targetid="SC">SplitChan</a><div class="xhrdiv" id="SC"></div></td>
 </tr>
 </tbody>
 </table>
-
 </div>
 </div>
+<script type="text/javascript">
+var l = document.getElementsByClassName("links");
+for(var i = 0; i < l.length;i++) {
+	l[i].addEventListener('click',headerClick);
+}
+</script>
 </body>
 </html>
